@@ -5,11 +5,11 @@ Folder structure and LLM instructions to manage a universe for story telling
 1. Folder Structure
 This universe is organized into three main parts:
 
-📚_worldbuilding/: The fundamental, high-level rules, history, and setting of the universe.
+📚 worldbuilding/: The fundamental, high-level rules, history, and setting of the universe.
 
-📇_canon_library/: A library of specific, reusable people, places, and things that appear in stories.
+📇 canon_library/: A library of specific, reusable people, places, and things that appear in stories.
 
-📜_stories/: The actual narratives, which are the primary drivers of the universe.
+📜 stories/: The actual narratives, which are the primary drivers of the universe.
 
 2. The Golden Rule: The Story Drives the Canon
 Your highest priority is maintaining consistency with the most recently written material in the 📜_stories/ folder. If you find a conflict between a new story and the canon library, assume the story is correct and the canon file needs to be updated.
