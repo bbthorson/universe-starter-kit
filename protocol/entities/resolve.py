@@ -40,16 +40,20 @@ PLACE_FIELDS = ("location",)
 # Minimal parsers (no PyYAML)
 # --------------------------------------------------------------------------
 def read_frontmatter_lines(path):
-    """Return the lines between the first two '---' fences."""
-    lines = open(path, encoding="utf-8").read().splitlines()
+    """Return the lines between the first two '---' fences.
+
+    A file with an opening fence but no closing fence is malformed — return
+    nothing rather than treating the whole prose body as frontmatter."""
+    with open(path, encoding="utf-8") as f:
+        lines = f.read().splitlines()
     if not lines or lines[0].strip() != "---":
         return []
     out = []
     for line in lines[1:]:
         if line.strip() == "---":
-            break
+            return out
         out.append(line)
-    return out
+    return []
 
 
 def unquote(s):
@@ -71,8 +75,10 @@ def parse_registry(path):
     cur = None
     in_aliases_block = False
 
-    for raw in open(path, encoding="utf-8").read().splitlines():
-        line = raw.split("#", 1)[0] if not _in_string_hash(raw) else raw
+    with open(path, encoding="utf-8") as f:
+        raw_lines = f.read().splitlines()
+    for raw in raw_lines:
+        line = _strip_comment(raw)
         if not line.strip():
             continue
 
@@ -119,11 +125,19 @@ def parse_registry(path):
     return alias_map, entries
 
 
-def _in_string_hash(line):
-    # Keep '#' inside quoted aliases (e.g. hashtags) — a coarse guard so the
-    # comment-stripper doesn't chop a legitimate value. We only strip comments
-    # on lines that clearly aren't quoted values.
-    return '"' in line and line.count('"') >= 2 and "#" in line and line.index('"') < line.index("#")
+def _strip_comment(line):
+    """Strip a trailing '#' comment while respecting quotes, so '#' inside a
+    quoted value (e.g. a hashtag alias) survives."""
+    in_quote = None
+    for i, ch in enumerate(line):
+        if ch in ("'", '"'):
+            if in_quote == ch:
+                in_quote = None
+            elif in_quote is None:
+                in_quote = ch
+        elif ch == "#" and in_quote is None:
+            return line[:i]
+    return line
 
 
 def _split_inline_list(s):
@@ -151,8 +165,10 @@ def parse_non_entities(path):
     """Return (exact_lower:set, prefix_lower:list)."""
     exact, prefixes = set(), []
     pending_pattern = None
-    for raw in open(path, encoding="utf-8").read().splitlines():
-        line = raw.split("#", 1)[0]
+    with open(path, encoding="utf-8") as f:
+        raw_lines = f.read().splitlines()
+    for raw in raw_lines:
+        line = _strip_comment(raw)
         if not line.strip():
             continue
         if re.match(r"^(\w+):\s*$", line):
@@ -204,8 +220,10 @@ def extract_names(fm_lines):
             key, val = m_top.group(1), m_top.group(2).strip()
             cur = key
             in_registers = (key == "registers")
-            if key == "pov" and val:
-                found["pov"].append(unquote(val))
+            # pov is a scalar; location is usually a list but a single-string
+            # value (location: "The Archive") is common enough to support.
+            if key in ("pov", "location") and val:
+                found[key].append(unquote(val))
             continue
         m_list = re.match(r"^\s+-\s+(.*)$", line)
         if m_list and cur in ("characters_present", "characters_referenced", "location"):

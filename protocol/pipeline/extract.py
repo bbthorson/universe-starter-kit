@@ -143,8 +143,10 @@ def parse_chapter_fm(path):
             in_registers = (key == "registers")
             if key == "meal":       # legacy alias for `part`
                 key = "part"
-            if key in ("pov", "chapter", "date", "title", "part", "beat",
-                       "beat_purpose") and val:
+            if key == "location" and val:
+                data["location"].append(unquote(val))
+            elif key in ("pov", "chapter", "date", "title", "part", "beat",
+                         "beat_purpose") and val:
                 data[key] = unquote(val)
             continue
         m_list = re.match(r"^\s+-\s+(.*)$", line)
@@ -172,7 +174,10 @@ def extract_story(story_dir):
         fm = parse_chapter_fm(path)
         if not fm["chapter"]:
             continue
-        num = int(fm["chapter"])
+        try:
+            num = int(fm["chapter"])
+        except ValueError:
+            num = fm["chapter"]  # non-numeric ids (prologue, 1a) pass through
         ds = dates_of(fm["date"])
         if not ds:
             err(f"{os.path.relpath(path, ROOT)}: no ISO date in frontmatter `date`")
@@ -309,7 +314,8 @@ def extract_places():
 def overview_oneline(path):
     """The text following an '## Overview' heading, as the one-line summary."""
     try:
-        lines = open(path, encoding="utf-8").read().splitlines()
+        with open(path, encoding="utf-8") as f:
+            lines = f.read().splitlines()
     except OSError:
         return None
     for i, l in enumerate(lines):
