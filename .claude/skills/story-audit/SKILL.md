@@ -47,6 +47,42 @@ only in reading):
    or schema failure is a finding. Check that character files' lore sections are current
    with the finished prose.
 
+Then a **synthesis pass** merges every pass's findings into one tiered report (below).
+
+The reason for the fan-out is capacity: a whole book plus its tracking and canon does not
+fit usefully in one context — a single-pass read either overflows or degrades into
+skimming. So each pass holds one slice and returns *findings*, and the orchestrator that
+synthesizes **reads the findings, never the chapters**. If the orchestrator starts reading
+prose itself, it runs out of room before it can synthesize — that defeats the whole method.
+
+Ready-to-fill prompt scaffolds for each pass (with the cross-reference file lists and the
+shared output contract already written out) live in
+[`references/agent_prompts.md`](references/agent_prompts.md). Adapt them to the book's part
+boundaries and file names.
+
+### Which model runs which pass (advisory)
+
+Split the passes by **judgment required**, not by length — this is the difference between a
+report that looks clean and one that is clean:
+
+| Pass | Model tier | Why |
+|------|-----------|-----|
+| Per-part continuity | **Strong reasoner** | The contradictions that hurt a book are subtle (a prop in two places after a late twist, a name revealed before the scene meant to discover it). A cheap model reading fast *misses* these — and a missed contradiction never gets escalated, so the report reads clean but isn't. |
+| Story-structure | **Strong reasoner** | Fair-play, arc-completion, and pacing are judgment calls. |
+| Tracking-fidelity | **Cheaper model OK** | Mostly "does this cell match the prose / the frontmatter?" — high-volume, verifiable, low-judgment. |
+| Records-layer | **Cheaper model OK** | Running the pipeline and reading its errors is mechanical. |
+| Synthesis | **Strong reasoner** | It's the deliverable the author acts on. |
+
+The instinct to "use a cheap model for the long, tedious passes" is right *for the tracking
+and records passes* and wrong for continuity — that's where a false negative costs you a
+real bug. If tokens are tight, economize on tracking/records, never on continuity.
+
+Treat this as a default, not a law: if the orchestrator is already a strong model and the
+book is short, one tier throughout is fine. **A skill can't set the model itself** — it's
+instructions the orchestrator follows; the orchestrator picks each subagent's model via the
+Agent tool's `model` parameter. State which tiers ran which passes at the top of the report
+so a reader knows the confidence level.
+
 ## Severity and tiers
 
 Every finding gets a severity:
@@ -75,6 +111,12 @@ Write the report to `stories/<book>/tracking/audit_YYYY-MM-DD.md`:
    (prose vs. source, source cited) · suggested resolution (which side is wrong).
 4. **Author calls** — findings where the right fix is a creative decision, listed
    separately with options rather than a recommendation.
+5. **What's genuinely strong (verified clean)** — a real section, not a courtesy. An audit
+   that only lists problems misrepresents a healthy book and hides the signal about what
+   *not* to touch.
+
+A fill-in report skeleton lives in
+[`references/report_template.md`](references/report_template.md).
 
 ## Fix pass (separate, on request)
 
