@@ -6,4 +6,4 @@ Thumbs.db
 
 # Temp files
 *.tmp
-*~
+*~.DS_Store
