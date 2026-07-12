@@ -44,21 +44,23 @@ Some tells are countable. Run these before the judgment read and hand the model 
 so it spends its attention deciding *whether the frequency is a problem in this genre* rather
 than hunting blind. Report per chapter and book-total.
 
-| Tell | Cheap signal (adapt regex to your prose) |
-|------|------------------------------------------|
-| Em-dash density | count `—` per 1000 words, per chapter |
-| Negative parallelism | `not (just \|merely \|only )?[^.]{1,40}[—,] (it'?s\|but) ` and "It wasn't X. It was Y." |
-| "Here's the kicker" | `here'?s (the\|where) (the )?(thing\|kicker\|catch\|interesting\|deal)`, `but here'?s` |
-| Corporate/AI filler | `\b(delve\|leverage\|unlock\|elevate\|testament\|tapestry\|landscape\|ecosystem\|symphony\|realm\|navigate the)\b` |
-| Magic adverbs | `\b(deeply\|quietly\|fundamentally\|remarkably\|profoundly\|utterly\|palpably)\b` frequency |
-| Recycled physical tells | somatic-beat frequency per chapter: `\b(jaw\|breath\|throat\|chest\|pulse\|swallow\w*\|exhal\w*)\b`; then flag the *same* beat (e.g. a clenched jaw) recurring across chapters or clustered in one |
-| Chapter-ending symmetry | for each chapter, flag when its **last sentence stands alone as its own paragraph and runs under ~12 words** — a cheap proxy for the "epiphany button" close. A pattern across many chapters is the tell. |
+Each entry is `signal — what to count`. Regexes are given as clean code spans (a bulleted
+list, not a table, so the pipes are real alternation you can copy verbatim — a markdown table
+would force `\|` escapes that break the regex):
+
+- **Em-dash density** — count `—` per 1000 words, per chapter.
+- **Negative parallelism** — `not (just |merely |only )?[^.]{1,40}[—,] (it'?s|but) `, plus "It wasn't X. It was Y."
+- **"Here's the kicker"** — `here'?s (the|where) (the )?(thing|kicker|catch|interesting|deal)` and `but here'?s`.
+- **Corporate/AI filler** — `\b(delve|leverage|unlock|elevate|testament|tapestry|landscape|ecosystem|symphony|realm|navigate the)\b`.
+- **Magic adverbs** — `\b(deeply|quietly|fundamentally|remarkably|profoundly|utterly|palpably)\b` frequency.
+- **Recycled physical tells** — somatic-beat frequency per chapter: `\b(jaw|breath|throat|chest|pulse|swallow\w*|exhal\w*)\b`; then flag the *same* beat (e.g. a clenched jaw) recurring across chapters or clustered in one.
+- **Chapter-ending symmetry** — for each chapter, flag when its **last sentence stands alone as its own paragraph and runs under ~12 words** — a cheap proxy for the "epiphany button" close. A pattern across many chapters is the tell.
 
 Counts are inputs, not verdicts. The judgment pass decides which counts are genre-legitimate
 (a technical universe may earn "leverage"; a lyrical one may earn "symphony") and which are
 the model's fingerprints.
 
-The last two rows are **proxies**, not detectors — a somatic word isn't automatically a tell,
+The last two entries are **proxies**, not detectors — a somatic word isn't automatically a tell,
 and a short final paragraph is sometimes the right ending. They exist because these two tells
 have no clean single-token signal and are the easiest to skip on a judgment-only read (the
 chapter-ending one especially: it requires deliberately reading all N closing paragraphs

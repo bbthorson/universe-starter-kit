@@ -100,8 +100,9 @@ judgment the `story-audit` prose-craft pass makes (see
 the obvious ones in the scene in front of you: negative parallelism ("not X — it's Y") used
 as a reflex, a "here's the kicker" reveal, magic adverbs propping up flat sentences, an
 uncatalogued physical tell (hitched breath, tight jaw) carrying the emotion, or the same two
-or three stock smells. Flag these as 🔵 craft suggestions only — never a contradiction, never
-a mandate — and honor the same carve-outs: a device the style guide mandates or a catalogued
+or three stock smells. Flag these as 🔵 craft suggestions — or 🟡 if a single scene clusters
+the *same* tell several times — never a contradiction, never a mandate; and honor the same
+carve-outs: a device the style guide mandates or a catalogued
 voice tic is not a tell. If the scene feels tell-heavy, say so and recommend a full
 `story-audit` prose-craft pass rather than judging the pattern from one scene.
 
