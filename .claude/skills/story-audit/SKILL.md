@@ -46,6 +46,15 @@ only in reading):
    `protocol/entities/resolve.py` and `protocol/pipeline/extract.py`; any resolution miss
    or schema failure is a finding. Check that character files' lore sections are current
    with the finished prose.
+5. **Prose-craft / AI-tells pass** (whole book, prose only). Scans for the stylistic tells
+   of AI-generated prose — negative parallelism, em-dash addiction, magic adverbs, recycled
+   physical tells, a narrow sensory palette, perfect paragraph symmetry. The full checklist,
+   the genre carve-outs that stop it firing on legitimate craft, and the mechanical
+   count-first method live in [`references/ai_tells.md`](references/ai_tells.md). This pass
+   feeds **Tier 3 — Craft** only: its findings are 🔵/🟡 suggestions, never contradictions.
+   Because a tell only resolves into a pattern *across* the book, this is a whole-book
+   judgment that per-chapter checks structurally cannot make — count the greppable tells
+   first (regexes in the reference), then judge which counts are genre-legitimate.
 
 Then a **synthesis pass** merges every pass's findings into one tiered report (below).
 
@@ -71,6 +80,7 @@ report that looks clean and one that is clean:
 | Story-structure | **Strong reasoner** | Fair-play, arc-completion, and pacing are judgment calls. |
 | Tracking-fidelity | **Cheaper model OK** | Mostly "does this cell match the prose / the frontmatter?" — high-volume, verifiable, low-judgment. |
 | Records-layer | **Cheaper model OK** | Running the pipeline and reading its errors is mechanical. |
+| Prose-craft / AI-tells | **Cheaper model OK** | The counting is mechanical and the checklist is explicit; the one place a stronger model helps is the genre-legitimacy call, so escalate only if the counts are ambiguous. |
 | Synthesis | **Strong reasoner** | It's the deliverable the author acts on. |
 
 The instinct to "use a cheap model for the long, tedious passes" is right *for the tracking

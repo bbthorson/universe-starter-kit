@@ -93,6 +93,19 @@ If the target is the opening of a new book or references prior events, check the
 `## After Book N` entry in `canon library/continuity.md` for world state, character state,
 and recurring-character availability.
 
+### 7. AI-tells (light craft glance, optional)
+A single scene can't reveal the *patterns* that mark AI-generated prose — that's a whole-book
+judgment the `story-audit` prose-craft pass makes (see
+`.claude/skills/story-audit/references/ai_tells.md`). But at draft time it's cheap to catch
+the obvious ones in the scene in front of you: negative parallelism ("not X — it's Y") used
+as a reflex, a "here's the kicker" reveal, magic adverbs propping up flat sentences, an
+uncatalogued physical tell (hitched breath, tight jaw) carrying the emotion, or the same two
+or three stock smells. Flag these as 🔵 craft suggestions — or 🟡 if a single scene clusters
+the *same* tell several times — never a contradiction, never a mandate; and honor the same
+carve-outs: a device the style guide mandates or a catalogued
+voice tic is not a tell. If the scene feels tell-heavy, say so and recommend a full
+`story-audit` prose-craft pass rather than judging the pattern from one scene.
+
 ## Output
 
 Report findings as a list, grouped by check. For each:
