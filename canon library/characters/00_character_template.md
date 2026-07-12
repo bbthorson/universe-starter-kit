@@ -1,3 +1,13 @@
+---
+type: Character
+title: "[Character Name]"
+description: "[One line — used by agents to decide relevance without opening the file]"
+tags: [main-cast]
+timestamp: 2026-01-01T00:00:00Z
+id: char.[slug]            # stable key — register in protocol/entities/entities.yaml; filename = slug
+status: active
+---
+
 # [Character Name]
 
 ## Overview

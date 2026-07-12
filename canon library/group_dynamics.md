@@ -1,3 +1,11 @@
+---
+type: Reference
+title: "Group Dynamics"
+description: Tensions, alliances, and pairing dynamics among the main cast.
+tags: [reference, relationships]
+timestamp: 2026-01-01T00:00:00Z
+---
+
 # Group Dynamics
 
 The tensions, alliances, and pairing dynamics among the main cast. Character files describe individuals; this file describes the *relationships* — which is where ensemble scenes live or die.

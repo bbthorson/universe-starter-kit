@@ -1,3 +1,14 @@
+---
+type: Location
+title: "[Location Name]"
+description: "[One line — what it is and why it matters]"
+tags: [location]
+timestamp: 2026-01-01T00:00:00Z
+id: place.[slug]           # stable key — register in protocol/entities/entities.yaml; filename = slug
+status: recurring          # recurring | story-specific
+first_appearance: "Book N, Chapter N"
+---
+
 # [Location Name]
 
 **Type:** [Home / shop / public space / workplace / …]
