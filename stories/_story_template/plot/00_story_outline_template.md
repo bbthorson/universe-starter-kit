@@ -8,7 +8,7 @@ Use this template to outline a new story. Copy the whole `_story_template/` fold
 
 **Title:** [Working title]
 **Central problem:** [One-sentence description]
-**Stakes:** [What's at risk? Calibrate to your tone ceiling — `ai_instructions.md` §7]
+**Stakes:** [What's at risk? Calibrate to your tone ceiling — [ai_instructions.md](../../../ai_instructions.md) §7]
 **Antagonist:** [Who or what is behind it?]
 
 ---
@@ -23,7 +23,7 @@ Use this template to outline a new story. Copy the whole `_story_template/` fold
 
 ## Anchor Element Plan
 
-*(If your universe uses a recurring anchor element — see `ai_instructions.md` §9 — plan its appearances before writing. Lock it early and reference it consistently across chapters.)*
+*(If your universe uses a recurring anchor element — see [ai_instructions.md](../../../ai_instructions.md) §9 — plan its appearances before writing. Lock it early and reference it consistently across chapters.)*
 
 | Part | Emotional State | How the Anchor Reflects It |
 |------|-----------------|----------------------------|
