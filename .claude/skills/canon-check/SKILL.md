@@ -75,7 +75,10 @@ Cross-check `tracking/subplot_threads.md`:
 - Every tracked object is in the **right hands** at this point in its custody chain.
 - Thread status is consistent — nothing "paid off" that was never introduced; nothing
   contradicting an earlier `complicated`/`developing` beat.
-- Flag threads that this scene drops without resolution if they were `carry forward`.
+- Flag any thread that ends in silence: a thread may only end `paid off`, explicitly
+  `dropped` (with its why note), or `carry forward` — and a `carry forward` thread
+  still needs its on-page carry-forward beat (a nod that keeps it alive), not
+  disappearance.
 
 ### 5. Hard constraints (`ai_instructions.md`)
 These are red lines — flag any violation:
@@ -98,8 +101,9 @@ Report findings as a list, grouped by check. For each:
 - **Location:** chapter + the prose phrase at issue (`file:line` where possible)
 - **Conflict:** what the prose says vs. what the source says, with the source cited
 - **Suggested resolution:** which side is likely wrong. Default assumption: the prose is
-  the truth and the tracking file needs updating — *unless* the prose violates a §5 hard
-  constraint, in which case the prose is the problem.
+  the truth and the tracking file needs updating — *unless* the prose violates a hard
+  constraint (§5 POV rules, §7 tone ceiling, §8 red lines), in which case the prose is
+  the problem.
 
 End with a one-line verdict: **clean**, **slips found (N)**, or **canon contradictions
 found (N)**. Do not modify any prose file. If asked to *fix* findings, update the
