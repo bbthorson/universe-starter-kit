@@ -186,3 +186,50 @@ file + line, what's wrong, what it should say (cite the conflicting source). End
 verdict on whether the project is "tracking character and story progress appropriately" and
 a prioritized list of record updates.
 ```
+
+---
+
+## Prose-craft / AI-tells pass
+
+Whole-book, prose only. Scans for the stylistic tells of AI-generated prose and feeds
+**Tier 3 — Craft** only. Cheaper-model tier: the counting is mechanical and the checklist is
+explicit. Its findings are suggestions, never contradictions — say so in the prompt.
+
+```
+You are running a READ-ONLY prose-craft audit of Book <N> of the <universe name>, scanning
+for the stylistic tells of AI-generated prose. Do NOT edit any file. Report findings only.
+Your final message is the deliverable.
+
+Base directory (quote paths with spaces): <ABS PATH>
+
+Read first (the rules that define what is NOT a tell here):
+- ".claude/skills/story-audit/references/ai_tells.md" — the taxonomy, the severity ladder,
+  and the mechanical count-first method. Follow it exactly.
+- "ai_instructions.md" §2 (prose style) and §3 (dialogue) — any device the style guide
+  MANDATES (e.g. sensory-first prose) is not a tell; its narrow repetition is.
+- "world building/" voice guide — every CATALOGUED voice tic (a dialect, a verbal habit, a
+  signature somatic beat) is a designed feature. Never flag a catalogued tic as an AI tell.
+  Build this allowlist before you read the prose.
+
+Then, for ALL chapter files in "stories/<book>/chapters/":
+1. Mechanical pre-pass FIRST. For each greppable tell in ai_tells.md, count occurrences per
+   chapter and book-total (em-dash density per 1000 words; negative-parallelism cadence;
+   "here's the kicker" phrasings; the filler/buzzword list; magic adverbs; somatic-beat
+   frequency; and the chapter-ending-symmetry proxy — is each chapter's last sentence a
+   short standalone paragraph?). Produce a table. The last two are proxies that surface
+   candidates for the judgment pass, not verdicts.
+2. Judgment pass. Using the counts as input, decide which frequencies are genre-legitimate
+   and which are the model's fingerprints. Then read for the non-greppable tells: recycled
+   physical tells (same somatic beat across chapters), a narrow/repeated sensory palette,
+   meaningless action filler, perfect paragraph/chapter symmetry.
+
+Severity ladder (from ai_tells.md): a tell once or twice → 🔵 nit; a tell forming a pattern
+across chapters or clustered heavily in one → 🟡 slip. NEVER 🔴, NEVER Tier 1. Frame each
+finding as a suggestion with a location, not a mandate.
+
+For each finding: the tell, its count and locations (file:line + short quotes), the carve-out
+you checked (why it isn't legitimate craft or a catalogued tic here), and a suggested fix
+(vary / thin out / cut). End with: (a) the count table, (b) a 2–3 sentence verdict on whether
+the prose reads as written or generated, and (c) the 3–5 tells most worth the author's
+attention. All findings route to Tier 3.
+```
