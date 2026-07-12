@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "example.universe.character.profile",
+  "$comment": "Internal record schema. 'example.universe' is a placeholder NSID root — swap it (here and in pipeline/extract.py) for a domain you own before publishing anywhere (ARCHITECTURE.md §5). Only reader-safe structured facts are published — never the prose body wholesale (§6).",
+  "title": "character.profile",
+  "type": "object",
+  "required": ["$type", "id", "subject", "displayName"],
+  "additionalProperties": false,
+  "properties": {
+    "$type": {"const": "example.universe.character.profile"},
+    "id": {"type": "string", "pattern": "^profile\\."},
+    "subject": {"type": "string", "pattern": "^char\\."},
+    "displayName": {"type": "string"},
+    "oneLine": {"type": ["string", "null"]},
+    "personaPublic": {"type": ["string", "null"]},
+    "keyContradiction": {"type": ["string", "null"]},
+    "sourceFile": {"type": "string"}
+  }
+}

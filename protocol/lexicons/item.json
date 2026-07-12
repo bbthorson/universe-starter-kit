@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "example.universe.item",
+  "$comment": "Internal record schema. Placeholder NSID root (ARCHITECTURE.md §5). The custody chain lives in separate custodyEvent records (§6).",
+  "title": "item",
+  "type": "object",
+  "required": ["$type", "id", "displayName"],
+  "additionalProperties": false,
+  "properties": {
+    "$type": {"const": "example.universe.item"},
+    "id": {"type": "string", "pattern": "^item\\."},
+    "displayName": {"type": "string"},
+    "firstAppearance": {"type": ["string", "null"]},
+    "sourceFile": {"type": "string"}
+  }
+}
