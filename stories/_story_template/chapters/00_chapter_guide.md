@@ -15,7 +15,7 @@ title: "[Chapter Title]"
 part: 3
 beat: "[Structural beat — e.g., Bad Guys Close In]"
 day: "Monday → Wednesday"                 # human-readable (optional)
-date: "2026-10-12 to 2026-10-14"          # ISO, absolute (required). A span is allowed.
+date: "2026-10-12 to 2026-10-14"          # ISO, absolute (required). Spans: "A to B" or ISO interval "A/B" — tooling reads the ISO dates, not the separator.
 time: "Mon morning → Wed midday"          # time-of-day or span (optional)
 location:                                 # exact canonical names from canon library/locations/index.md
   - "[Location Name]"
@@ -46,7 +46,7 @@ audit_notes:                              # optional; continuity/decision notes 
 ### Rules
 
 1. **`date` is absolute.** Never write `date: "the next day"`. Use ISO format. This is the single biggest defense against timeline drift across chapters.
-2. **`location` is canonical.** Use the **exact** display name from `canon library/locations/index.md` (capitalization included) so tooling can resolve it. The only permitted qualifier is a trailing `(referenced)` when a place is named but isn't the active scene. Settings that genuinely aren't in the registry (a one-off road stop, a public street) are written as plain free text — they simply won't resolve to an entity. Check the index's scheduling/travel rules before assigning a date.
+2. **`location` is canonical.** Use the **exact** display name from [canon library/locations/index.md](../../../canon%20library/locations/index.md) (capitalization included) so tooling can resolve it. The only permitted qualifier is a trailing `(referenced)` when a place is named but isn't the active scene. Settings that genuinely aren't in the registry (a one-off road stop, a public street) are written as plain free text — they simply won't resolve to an entity. Check the index's scheduling/travel rules before assigning a date.
 3. **`registers` only lists characters in the active scene.** A character mentioned but not present doesn't get a register. If a character is in the scene but no register is listed, that's a flag — they're probably reduced to set dressing.
 4. **`threads` must reference an entry in `tracking/subplot_threads.md`.** If a thread is touched here, it should appear there with this chapter cited.
 5. **`beat_purpose` is one sentence.** If you can't answer what this chapter uniquely accomplishes, the chapter probably doesn't need to exist.

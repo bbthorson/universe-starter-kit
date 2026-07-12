@@ -52,4 +52,4 @@ What does this character do under pressure that you need to remember to write? B
 
 ## Threads they carry forward
 
-Anything seeded this book that pays off in a later book. Should match `subplot_threads.md` → "Seeds for future books" and `canon library/series_plan.md`.
+Anything seeded this book that pays off in a later book. Should match [subplot_threads.md](../subplot_threads.md) → "Seeds for future books" and [canon library/series_plan.md](../../../../canon%20library/series_plan.md).
