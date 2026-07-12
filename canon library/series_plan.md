@@ -1,3 +1,12 @@
+---
+type: SeriesPlan
+title: "[Series Name] — Series Plan"
+description: Series overview, locked decisions, the per-book index, and cross-book threads.
+tags: [series-plan, index]
+timestamp: 2026-01-01T00:00:00Z
+id: series-plan
+---
+
 # Series Plan
 
 The series overview and index. Per-story detail lives in [`books/`](books/) — one file per planned story. Update individual book files there; keep this file for the series-level frame.

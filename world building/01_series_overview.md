@@ -1,3 +1,11 @@
+---
+type: Guide
+title: "Series Overview"
+description: Target audience, core concept, format, and series guidelines.
+tags: [world-building, guide]
+timestamp: 2026-01-01T00:00:00Z
+---
+
 # Series Overview
 
 The one-page answer to "what is this universe?" Fill it in before anything else — every other file assumes these decisions have been made.

@@ -1,0 +1,35 @@
+# Intentional non-entities
+#
+# Names / surfaces that appear in chapter frontmatter as free text or one-off
+# background but are DELIBERATELY not registered in entities.yaml. The
+# resolver (resolve.py) consults this list so these are reported as EXPECTED
+# non-matches, not silent misses or errors.
+#
+# The distinction that keeps the registry honest: an entity is something with
+# identity across scenes (register it); a one-off is scenery with a name
+# (list it here, with a comment saying why). If a "one-off" starts recurring,
+# promote it to the registry.
+#
+# Each pattern is matched against the NORMALIZED frontmatter value (trailing
+# "(...)" annotations already stripped), case-insensitively. `prefix: true`
+# matches any value that starts with the pattern (useful for structural
+# descriptors that carry a trailing " — ...").
+
+people:
+  # Unnamed / background persons who speak or appear once.
+  # - "Waitress"                 # incidental (one scene)
+  # - "The process server"       # unnamed; delivers one document
+  # A deliberately-anonymous appearance of a REAL entity also goes here:
+  # if the narrative withholds who someone is, don't resolve the withheld
+  # surface form to their id — that's a spoiler leaking into data.
+  # - "Unknown out-of-place man"
+
+places:
+  # One-off settings and transit that are not recurring registered locations.
+  # - "The Ridgeline Diner"      # road stop, one scene
+
+# Structural descriptors used in `pov` or `location` when a chapter is an
+# ensemble montage rather than a single place/POV.
+montage:
+  # - pattern: "Distributed"
+  #   prefix: true

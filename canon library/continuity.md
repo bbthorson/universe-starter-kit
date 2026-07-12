@@ -1,3 +1,11 @@
+---
+type: Continuity
+title: "Continuity Summary"
+description: "Previously on… — world state and character state after each completed story."
+tags: [continuity, reference]
+timestamp: 2026-01-01T00:00:00Z
+---
+
 # Continuity Summary
 
 A "previously on…" reference for each completed story. When starting a new story, read the most recent entry to understand the current state of the world. Update after completing each story.

@@ -1,3 +1,13 @@
+---
+type: Antagonist
+title: "[Antagonist Name]"
+description: "[One line: which book, what kind of antagonist]"
+tags: [antagonist, bookN]
+timestamp: 2026-01-01T00:00:00Z
+id: char.[slug]            # antagonists are characters — char.* namespace, no antagonist.*
+status: future             # future until their book is in play
+---
+
 # [Antagonist Name]
 
 Antagonists are characters — they live in this separate folder only because their files are spoiler-dense forward planning, not because they're a different kind of entity.

@@ -1,3 +1,11 @@
+---
+type: Reference
+title: "Glossary"
+description: Canon terms, quick-reference tables, and consistency rules.
+tags: [glossary, reference]
+timestamp: 2026-01-01T00:00:00Z
+---
+
 # Glossary
 
 Canon terms, quick-reference tables, and consistency rules. This file is the fast lookup — when a fact needs a paragraph of context, it belongs in a character/location/book file and gets a one-line pointer here.

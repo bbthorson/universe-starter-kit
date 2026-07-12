@@ -1,3 +1,14 @@
+---
+type: Book
+title: "Book [N] — [Working Title]"
+description: "[Focal character]. [One-line premise.]"
+tags: [series-plan, bookN]
+timestamp: 2026-01-01T00:00:00Z
+id: book.[N]
+status: planned            # planned | drafting | v1-locked
+focal_character: char.[slug]
+---
+
 # Book [N]: [Working Title]
 
 One planning file per story. This is the *concept* — premise, arc, and seeds. The story's own folder under `stories/` holds the outline, chapters, and tracking once writing begins.

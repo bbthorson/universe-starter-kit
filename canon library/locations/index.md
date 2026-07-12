@@ -1,3 +1,11 @@
+---
+type: Reference
+title: "Locations — Index"
+description: Index of all locations, cross-cutting geography facts, and the hard scheduling/travel rules.
+tags: [locations, index, canon-rules]
+timestamp: 2026-01-01T00:00:00Z
+---
+
 # Locations — Index
 
 One file per location in this folder (copy `00_location_template.md`). Add a new file as new locations appear in stories. Per-location operating rules live in each file; cross-cutting rules and geography live below.

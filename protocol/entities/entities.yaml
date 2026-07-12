@@ -1,0 +1,77 @@
+# Entity Registry
+#
+# Canonical, permanent, local IDs for every character, place, and item in the
+# universe. This file is the committed source of truth that makes name -> ID
+# resolution deterministic. Run `python3 protocol/entities/resolve.py` to
+# verify that every name in your chapter frontmatter resolves.
+#
+# =========================================================================
+# Conventions (locked — these survived a production universe; change them
+# deliberately if at all, and never after records have been published)
+# =========================================================================
+#
+#   1. ID SCHEME: `<type>.<slug>` — characters -> `char.*`, places ->
+#      `place.*`, items -> `item.*`. IDs are PERMANENT: they never change
+#      even when a displayName or filename does. Slugs are lowercase,
+#      hyphen-separated.
+#
+#   2. ANTAGONISTS ARE CHARACTERS: `char.<slug>`, not a separate
+#      `antagonist.*` namespace. The antagonists/ folder is an authoring
+#      convenience, not an identity type.
+#
+#   3. REFERENCED-ONLY ENTITIES get minimal entries with `status: referenced`
+#      so their references still resolve (a person who is named in canon but
+#      has no file of their own).
+#
+#   4. ALIAS COVERAGE: `aliases` must list every surface form a name appears
+#      as in prose AND in chapter frontmatter — display names, nicknames,
+#      epithets (e.g. a villain's pre-naming epithet like "the developer").
+#      This is what makes resolution work. The resolver normalizes a
+#      frontmatter value by stripping trailing "(...)" annotations before
+#      matching, so aliases hold the BASE surface forms, not the annotations.
+#
+#   5. FILENAME = ID-SLUG: the entity's markdown file is named after its
+#      slug (`char.emma` -> `characters/emma.md`), and the file carries the
+#      `id:` in its frontmatter. One identity, three views: human file,
+#      knowledge-graph concept, derived record.
+#
+#   6. FUTURE ENTITIES (planned for later stories) are registered as light
+#      stubs with `status: future` so the namespace is reserved.
+#
+# STATUS VALUES:
+#   active      — appears on-page in finalized canon and has a file
+#   referenced  — named in canon but has no file of its own
+#   future      — reserved for a later story; not yet in play
+#
+# GOLDEN RULE: if a name in the prose/frontmatter and this registry disagree,
+# the prose wins — fix the registry.
+#
+# Deliberate one-offs (background people, one-off settings) are NOT
+# registered here — they're enumerated in `non_entities.yaml` so the
+# resolver treats them as expected non-matches, not misses.
+
+characters:
+  # - id: char.example-name
+  #   type: character
+  #   displayName: "Example Name"
+  #   aliases: ["Example Name", "Example", "the stranger"]
+  #   sourceFile: "canon library/characters/example-name.md"
+  #   status: active
+
+places:
+  # - id: place.example-location
+  #   type: place
+  #   displayName: "The Example Location"
+  #   aliases: ["The Example Location", "the shop"]
+  #   sourceFile: "canon library/locations/example-location.md"
+  #   status: active
+
+items:
+  # Register an item when an object matters enough to track custody
+  # (see the object-custody table in tracking/subplot_threads.md).
+  # - id: item.example-object
+  #   type: item
+  #   displayName: "The Example Object"
+  #   aliases: ["the object"]
+  #   sourceFile: "stories/01. Example/plot/00_story_background.md"
+  #   status: active
