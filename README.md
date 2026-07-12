@@ -36,6 +36,9 @@ Contents:
 ### 📜 stories/
 **Role: The actual narratives.** Each story has its own subdirectory with chapters, outlines, character notes, plot documents, and tracking files. Stories are the primary drivers of the universe — they are always right.
 
+### 🔌 protocol/
+**Role: Derived projection (optional until you publish).** Schemas, a stable-ID entity registry, and a pipeline that projects finalized prose to reader surfaces — a public site first; the AT Protocol as one optional lens. Records are generated from the creative layers, never authored by hand. See [protocol/ARCHITECTURE.md](protocol/ARCHITECTURE.md) for the outward (publishing) architecture and [protocol/KNOWLEDGE_FORMAT.md](protocol/KNOWLEDGE_FORMAT.md) for the inward (authoring) conventions. Even if you never publish, the entity registry and `resolve.py` are worth adopting on day one — they're what make continuity machine-checkable.
+
 ---
 
 ## The Golden Rule: The Story Drives the Canon

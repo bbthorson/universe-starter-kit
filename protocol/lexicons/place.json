@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "example.universe.place",
+  "$comment": "Internal record schema. Placeholder NSID root (ARCHITECTURE.md §5). `schedule` carries operating constraints (market days / hours) so a reader surface can flag open/closed on a story date (§6).",
+  "title": "place",
+  "type": "object",
+  "required": ["$type", "id", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "$type": {"const": "example.universe.place"},
+    "id": {"type": "string", "pattern": "^place\\."},
+    "name": {"type": "string"},
+    "status": {"type": ["string", "null"]},
+    "region": {"type": ["string", "null"]},
+    "firstAppearance": {"type": ["string", "null"]},
+    "schedule": {
+      "type": ["object", "null"],
+      "properties": {
+        "days": {"type": "array", "items": {"type": "string"}},
+        "hours": {"type": "string"},
+        "note": {"type": "string"}
+      }
+    },
+    "sourceFile": {"type": "string"}
+  }
+}
