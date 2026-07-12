@@ -6,7 +6,7 @@ Quick-reference guide to all characters appearing in this story — both main ca
 
 ## Main Cast Roles
 
-How each main character functions in *this* story. Reference their canon profiles in `canon library/characters/` for full backgrounds.
+How each main character functions in *this* story. Reference their canon profiles in [canon library/characters/](../../../canon%20library/characters/) for full backgrounds.
 
 | Character | Role in This Story | Key Contribution | Personal Stakes |
 |-----------|--------------------|------------------|-----------------|
