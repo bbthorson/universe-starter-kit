@@ -1,75 +1,153 @@
-# Universe Starter Kit
+# 🏛 Pinakes
 
-A template for building and maintaining a fictional universe — the folder structure, tracking conventions, and LLM instructions that keep a long-running story world consistent as it grows.
-
-Start by copying this repo, then replace the bracketed placeholders as your universe takes shape. The conventions here were extracted from a universe that ran them through a complete, fully-audited book; they earn their keep once the story gets longer than one person's memory.
+**Pinakes** is an open-source command-line utility and framework for building, linting, and maintaining fictional universes. It brings the software engineering principles of CI/CD and syntactic linting to creative writing—ensuring semantic continuity (timeline, casting, locations, and item custody) while compiling raw prose markdown into AT Protocol-compliant databases.
 
 ---
 
-## Directory Structure
+## 📜 The Historical Inspiration
 
-This universe is organized into layers, each with a distinct role:
+In the 3rd century BCE, the Great Library of Alexandria was rapidly accumulating the world's knowledge on thousands of unindexed papyrus scrolls. To prevent this vast archive from collapsing into chaos, the scholar and poet **Callimachus of Cyrene** compiled the **Pinakes** (Greek: Πίνακες, meaning "tables" or "charts"). 
 
-### 📚 world building/
-**Role: Rules and patterns.** High-level creative rules that govern how the universe works — tone, voice, structure, pacing. These files change rarely. They tell you *how to write* in this universe.
+The *Pinakes* was a monumental, 120-volume bibliographic catalog. It didn't just list books—it classified authors, indexed chapter metadata, cataloged character details, and verified historical timelines. 
 
-Contents:
-- `01_series_overview.md` — Target audience, core concept, format, series guidelines
-
-As your universe matures, add files here for a character voice guide (voice profiles and registers per character) and a writing guide (craft rules: chapter length, beat structure, pacing).
-
-### 📇 canon library/
-**Role: Facts and state.** The encyclopedia of specific people, places, and things in the universe. These files update after every story. They tell you *what is true* in this universe right now.
-
-Contents:
-- `characters/` — One file per character: background, relationships, secrets, and per-story lore tracking
-- `antagonists/` — One antagonist profile per planned story (antagonists are characters too — this folder just keeps their spoiler-heavy plans separate)
-- `locations/` — One file per location, plus `index.md` holding the cross-cutting geography facts and the **hard scheduling/travel rules**
-- `books/` — One concept/summary file per planned story
-- `series_plan.md` — Story order, timeline progression, secrets reveal schedule (the index for `books/`)
-- `continuity.md` — "Previously on…" world-state summary, updated after each story
-- `glossary.md` — Canon terms, quick-reference tables, consistency rules
-- `group_dynamics.md` — Tensions, alliances, and pairing dynamics among the main cast
-
-**Key distinction:** how a character *talks* (voice, registers) lives in `world building/`. What has *happened* to a character (backstory, events, relationships) lives in `canon library/`.
-
-### 📜 stories/
-**Role: The actual narratives.** Each story has its own subdirectory with chapters, outlines, character notes, plot documents, and tracking files. Stories are the primary drivers of the universe — they are always right.
-
-### 🔌 protocol/
-**Role: Derived projection (optional until you publish).** Schemas, a stable-ID entity registry, and a pipeline that projects finalized prose to reader surfaces — a public site first; the AT Protocol as one optional lens. Records are generated from the creative layers, never authored by hand. See [protocol/ARCHITECTURE.md](protocol/ARCHITECTURE.md) for the outward (publishing) architecture and [protocol/KNOWLEDGE_FORMAT.md](protocol/KNOWLEDGE_FORMAT.md) for the inward (authoring) conventions. Even if you never publish, the entity registry and `resolve.py` are worth adopting on day one — they're what make continuity machine-checkable.
+Modern storytellers face the same problem. As a fictional universe grows, the sheer volume of facts, timelines, and character states quickly exceeds one writer's working memory. **Pinakes** is the digital successor to Callimachus's tables: an automated archivist that verifies your universe's continuity as you write.
 
 ---
 
-## The Golden Rule: The Story Drives the Canon
+## 🧠 The Core Philosophy
 
-Your highest priority is maintaining consistency with the **most recently written material** in the `stories/` folder. If you find a conflict between a story and the canon library, **the story is correct** and the canon file needs to be updated.
+Pinakes is built on two load-bearing creative principles:
 
-The one exception: prose that violates a hard constraint in `ai_instructions.md` (your universe's red lines) is flagged as a prose problem, not a canon problem.
+### 1. The Golden Rule: The Story Drives the Canon
+In many data-driven narrative pipelines, structured world-state tables cage the writing. Pinakes inverts this. **Prose is the source of truth.** 
+If a finished chapter conflicts with a previously established fact in your encyclopedia, **the story is correct**, and the encyclopedia must be updated. Pinakes runs downstream of the writing, projecting the narrative's reality into structured records rather than constraining the author.
 
-## Workflow: The "Living Canon"
-
-When new information is revealed in a story, the canon library must be updated to reflect it. This can happen:
-- **During editing** — when changes affect canon (e.g., changing a location name)
-- **After completing a story** — using the Canon Updates checklist in the story template
-- **On request** — when you say "propose an update" to a file based on new material
-
-All significant canon changes should be logged in [CANON_CHANGELOG.md](CANON_CHANGELOG.md). The changelog is the canon's chronological history — when a fact changed, and why.
-
-## Modes of Operation
-
-The AI assistant operates in one of two modes, which you specify:
-
-- **✍️ Author Mode (Omniscient):** A co-creator with a bird's-eye view. Can access all information to help with planning, outlining, and consistency checks. In Author Mode, the assistant should be familiar with the contents of `canon library/` and `world building/`.
-
-- **🎭 Scene Mode (Limited Context):** A focused writing assistant that must ONLY use the specific files you provide for that request. This maintains authentic character perspective — characters don't know everything.
-
-## Creative Direction
-
-For tone, style, voice, and craft guidelines, see [ai_instructions.md](ai_instructions.md). Fill in its bracketed sections early — the hard constraints you set there (POV rules, tone ceiling, red lines) are what continuity checks enforce.
+### 2. Inward vs. Outward Layers
+A fictional universe has two opposite directions of information flow:
+* **The Inward Layer (Authoring):** A private, static, agent-readable knowledge graph used by the writer. It conforms to the Google **Open Knowledge Format (OKF)**—standardized Markdown files that let LLMs and scripts traverse character and location files without custom parsers.
+* **The Outward Layer (Publishing):** A public, time-series stream of records projected onto reader-facing surfaces (like a timeline explorer or social feeds). It conforms to **AT Protocol Lexicons**, where characters are cryptographic identities (DIDs) owning their own history.
 
 ---
 
-## A note on naming
+## 📂 Directory Layout
 
-Directory names deliberately avoid emoji and other special characters (the emoji live up here in the README headers instead). Plain paths keep the repo friendly to shells, scripts, and any extraction tooling you add later.
+To keep the repository clean, shell-friendly, and cohesive, we propose a standardized, single-word directory naming convention:
+
+```
+my-universe/
+├── pinakes.yaml       # Universe configuration
+├── rules/             # Custom YAML linter rules
+├── lore/              # [NEW] Rules & Patterns (formerly "world building")
+│   ├── overview.md    # Target audience, series rules
+│   └── voice_guide.md # Character voice registers
+├── codex/             # [NEW] Facts & Current State (formerly "canon library")
+│   ├── entities.yaml  # Stable ID and alias registry
+│   ├── characters/    # One file per active character
+│   ├── locations/     # One file per location (operating hours, schedules)
+│   └── items/         # Items tracked for custody
+├── stories/           # The Narrative Corpus
+│   └── book1/         # Flat folder per story
+│       ├── chapters/  # Chapter markdown files with YAML frontmatter
+│       └── tracking/  # Matrix/timeline ledger files
+└── records/           # [NEW] Derived published outputs (formerly "protocol/records")
+```
+
+### Folder Rename Rationale:
+* **`world building/` → `lore/`:** Eliminates spaces. Fits the cozy, creative tone of storytelling while remaining concise.
+* **`canon library/` → `codex/`:** Removes spaces. *Codex* historically refers to bound manuscripts of sheets, evoking a structured, authoritative catalog of characters, places, and objects.
+* **`protocol/records/` → `records/`:** Moves build outputs to the root directory, separating disposable compiled outputs from source code.
+
+---
+
+## 🔌 CLI Installation & Setup
+
+Pinakes is built in TypeScript/Node to leverage the `unified`/`remark` Markdown AST parsing ecosystem and the official AT Protocol SDKs.
+
+### Installation
+
+```sh
+npm install -g @pinakes/cli
+```
+
+### Initializing a Universe
+
+Bootstrap the standard `lore/`, `codex/`, and `stories/` folders with a default configuration:
+
+```sh
+pinakes init my-universe
+```
+
+---
+
+## 🛠 Command-Line Usage
+
+### 1. `pinakes lint`
+Scans the creative layers of your project, parses chapter frontmatter, resolves names against the codex registry, and checks for timeline or co-presence violations.
+
+```sh
+pinakes lint --root .
+```
+
+#### Diagnostic Output Example:
+```
+======================================================================
+PINAKES CONTINUITY CHECK
+======================================================================
+
+📁 stories/book1/chapters/ch11_the_empty_stall.md:
+  :18   [unresolved-entities] 🔴 ERROR: Unresolved reference to character 'Paolo Ferrante' in field 'characters_referenced'
+
+📁 stories/book1/chapters/ch17_sharpening_the_knives.md:
+        [co-presence-conflict] 🟡 WARNING: Co-presence conflict: Character 'Emma' is present in Chapter 17 (Distributed) and Chapter 14 (Emma's Apartment) at the same time.
+
+FAIL — pinakes found errors.
+```
+
+#### Built-in Checks:
+* **Entity Resolution:** Verifies that every character, location, and item mentioned in chapter frontmatter exists in `entities.yaml` or is explicitly ignored in `non_entities.yaml`.
+* **Sequential Timelines:** Ensures start dates do not retrogress across sequential chapters.
+* **Co-Presence Conflicts:** Flags physical impossibilities, such as a character being marked as present in two distinct locations at the same time.
+
+#### Custom YAML Rules:
+Authors can write custom rules in the `rules/` directory to enforce style guidelines or state transitions:
+
+```yaml
+# rules/voice-register.yaml
+name: "voice-register-transitions"
+description: "Verify that character registers only transition to valid states"
+severity: error
+selector: "stateEvent"
+validate:
+  field: "register"
+  pattern: "^(public|private|under-pressure)$"
+```
+
+---
+
+### 2. `pinakes compile`
+Extracts and translates your story files, locations, and character profiles into AT Protocol-compliant JSON records using namespaced Lexicons.
+
+```sh
+pinakes compile --root .
+```
+
+#### Compiled Output Structure:
+```
+records/
+├── book1/
+│   ├── scenes.json                    # Lexicon: *.scene
+│   └── character_state_events.json    # Lexicon: *.character.stateEvent
+└── series/
+    ├── places.json                    # Lexicon: *.place
+    └── character_profiles.json        # Lexicon: *.character.profile
+```
+
+---
+
+## 🦋 AT Protocol & Identity Alignment
+
+Pinakes models fictional universes using decentralized web primitives:
+
+* **Stable IDs & DIDs:** Characters are mapped from local registry IDs (`char.emma`) to **DIDs (Decentralized Identifiers)** (e.g., `did:plc:123...` or sub-domains like `did:web:emma.supperclub.site`).
+* **Cryptographic Story Stream:** In collaborative or open-world settings, chapters and state events are cryptographically signed by the character's key. The narrative timeline becomes a verifiable ledger of events.
+* **Lexicon Schema Conformity:** Outward records are formatted to match official schema definitions (Lexicons), making them portable across PDS (Personal Data Servers) and readable by custom social client feeds.

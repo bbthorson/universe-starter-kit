@@ -1,0 +1,12 @@
+# pinakes.yaml
+spec: 0.1
+project:
+  name: "[Your Universe Name]"
+  nsid: "example.universe"
+paths:
+  registry: "codex/entities.yaml"
+  nonEntities: "codex/non_entities.yaml"
+  stories: "stories"
+  locations: "codex/locations"
+  characters: "codex/characters"
+  output: "records"

@@ -1,0 +1,29 @@
+{
+  "name": "pinakes-cli",
+  "version": "0.1.0",
+  "description": "Fictional continuity linter and AT Protocol record compiler",
+  "main": "dist/cli.js",
+  "bin": {
+    "pinakes": "./dist/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "yaml": "^2.3.4",
+    "zod": "^3.22.4",
+    "unified": "^11.0.4",
+    "remark-parse": "^11.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "unist-util-visit": "^5.0.0",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}

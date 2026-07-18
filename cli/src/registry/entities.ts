@@ -1,0 +1,132 @@
+import fs from 'fs';
+import path from 'path';
+import YAML from 'yaml';
+import { z } from 'zod';
+
+export const EntitySchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  displayName: z.string(),
+  aliases: z.array(z.string()).default([]),
+  sourceFile: z.string().nullable().optional(),
+  status: z.string().nullable().optional().default('active'),
+});
+
+export type Entity = z.infer<typeof EntitySchema>;
+
+export interface ResolvedEntity {
+  id: string;
+  type: string;
+}
+
+export class Registry {
+  private aliasMap = new Map<string, ResolvedEntity>(); // lowercase(alias) -> entity
+  private nonEntityExact = new Set<string>();
+  private nonEntityPrefixes: string[] = [];
+  public allEntities: Entity[] = [];
+
+  constructor(projectRoot: string, registryRelPath: string, nonEntitiesRelPath: string) {
+    const registryPath = path.resolve(projectRoot, registryRelPath);
+    const nonEntitiesPath = path.resolve(projectRoot, nonEntitiesRelPath);
+
+    this.loadRegistry(registryPath);
+    this.loadNonEntities(nonEntitiesPath);
+  }
+
+  private loadRegistry(filePath: string) {
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Registry file not found at ${filePath}`);
+    }
+
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const parsed = YAML.parse(raw) || {};
+
+    // entities.yaml groups entities under characters:, places:, items:
+    const groups = ['characters', 'places', 'items'];
+    for (const group of groups) {
+      const items = parsed[group];
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          try {
+            const validated = EntitySchema.parse(item);
+            this.allEntities.push(validated);
+            
+            // Add primary displayName and id as aliases
+            const aliases = new Set<string>([
+              validated.id.toLowerCase(),
+              validated.displayName.toLowerCase(),
+              ...validated.aliases.map(a => a.toLowerCase())
+            ]);
+
+            for (const alias of aliases) {
+              this.aliasMap.set(alias, { id: validated.id, type: validated.type });
+            }
+          } catch (e) {
+            console.warn(`Warning: failed to parse registry item in group ${group}:`, item, e);
+          }
+        }
+      }
+    }
+  }
+
+  private loadNonEntities(filePath: string) {
+    if (!fs.existsSync(filePath)) {
+      return; // non_entities.yaml is optional
+    }
+
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const parsed = YAML.parse(raw) || {};
+
+    const categories = ['people', 'places', 'montage'];
+    for (const cat of categories) {
+      const items = parsed[cat];
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          if (typeof item === 'string') {
+            this.nonEntityExact.add(item.toLowerCase());
+          } else if (item && typeof item === 'object') {
+            const pattern = item.pattern || item.id;
+            if (typeof pattern === 'string') {
+              if (item.prefix === true) {
+                this.nonEntityPrefixes.push(pattern.toLowerCase());
+              } else {
+                this.nonEntityExact.add(pattern.toLowerCase());
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public normalize(raw: string): string {
+    let s = raw.trim();
+    if (s.length >= 2 && ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'")))) {
+      s = s.slice(1, -1).trim();
+    }
+    // strip trailing comment like "Sofia (centerstage)" -> "Sofia"
+    s = s.replace(/\s*\([^()]*\)\s*$/, '').trim();
+    return s;
+  }
+
+  public isNonEntity(name: string): boolean {
+    const low = name.toLowerCase();
+    if (this.nonEntityExact.has(low)) {
+      return true;
+    }
+    return this.nonEntityPrefixes.some(prefix => low.startsWith(prefix));
+  }
+
+  public resolve(name: string, expectedType?: string): ResolvedEntity | null {
+    const norm = this.normalize(name);
+    if (!norm) return null;
+
+    const hit = this.aliasMap.get(norm.toLowerCase());
+    if (hit) {
+      if (!expectedType || hit.type === expectedType) {
+        return hit;
+      }
+    }
+    return null;
+  }
+}
