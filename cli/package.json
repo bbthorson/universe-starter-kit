@@ -7,6 +7,9 @@
     "pinakes": "./dist/cli.js"
   },
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc && node -e \"import('fs').then(fs => { fs.cpSync('../template', './dist/template', { recursive: true }); fs.rmSync('./dist/template/.git', { recursive: true, force: true }); })\"",
     "watch": "tsc -w",
