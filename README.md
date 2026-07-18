@@ -66,7 +66,13 @@ Pinakes is built in TypeScript/Node to leverage the `unified`/`remark` Markdown 
 ### Installation
 
 ```sh
-npm install -g @pinakes/cli
+npm install -g @bbthorson/pinakes
+```
+
+Or run directly without installing:
+
+```sh
+npx @bbthorson/pinakes <command>
 ```
 
 ### Initializing a Universe
@@ -76,6 +82,9 @@ Bootstrap the standard `lore/`, `codex/`, and `stories/` folders with a default 
 ```sh
 pinakes init my-universe
 ```
+
+# Or using npx directly:
+# npx @bbthorson/pinakes init my-universe
 
 ---
 
