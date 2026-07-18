@@ -1,5 +1,5 @@
 {
-  "name": "pinakes-cli",
+  "name": "pinakes",
   "version": "0.1.0",
   "description": "Fictional continuity linter and AT Protocol record compiler",
   "main": "dist/cli.js",
@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node -e \"import('fs').then(fs => { fs.cpSync('../template', './dist/template', { recursive: true }); fs.rmSync('./dist/template/.git', { recursive: true, force: true }); })\"",
     "watch": "tsc -w",
     "start": "node dist/cli.js"
   },

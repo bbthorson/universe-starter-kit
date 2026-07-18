@@ -7,3 +7,11 @@ Thumbs.db
 # Temp files
 *.tmp
 *~
+
+# Dependencies & Cache
+node_modules/
+.npm-cache/
+.npm/
+
+# Local tests
+cli/test-universe/

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+import { fileURLToPath } from 'url';
 import { Command } from 'commander';
 import path from 'path';
+import fs from 'fs';
 import { loadConfig } from './config.js';
 import { Registry } from './registry/entities.js';
 import { LinterEngine } from './linter/engine.js';
@@ -71,6 +73,37 @@ program
     }
     catch (e) {
         console.error(`Error executing compile: ${e.message}`);
+        process.exit(1);
+    }
+});
+program
+    .command('init')
+    .description('Initialize a new universe directory from the Pinakes template')
+    .argument('[directory]', 'Directory to initialize (defaults to current directory)', '.')
+    .action((directory) => {
+    const dest = path.resolve(directory);
+    try {
+        const src = path.join(path.dirname(fileURLToPath(import.meta.url)), 'template');
+        if (!fs.existsSync(src)) {
+            // Fallback for development if executed directly from src/ (not dist/)
+            const devSrc = path.resolve(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../template'));
+            if (fs.existsSync(devSrc)) {
+                fs.cpSync(devSrc, dest, { recursive: true });
+            }
+            else {
+                throw new Error('Template folder not found.');
+            }
+        }
+        else {
+            fs.cpSync(src, dest, { recursive: true });
+        }
+        console.log(`\n🎉 Successfully initialized Pinakes universe at: ${dest}`);
+        console.log('You can now run:');
+        console.log('  pinakes lint');
+        console.log('  pinakes compile\n');
+    }
+    catch (e) {
+        console.error(`Error initializing project: ${e.message}`);
         process.exit(1);
     }
 });
